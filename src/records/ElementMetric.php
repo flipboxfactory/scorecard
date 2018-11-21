@@ -10,7 +10,6 @@ namespace flipbox\scorecard\records;
 
 use Craft;
 use craft\helpers\StringHelper;
-use flipbox\ember\helpers\ArrayHelper;
 use flipbox\ember\helpers\ModelHelper;
 use flipbox\ember\records\ActiveRecordWithId;
 use flipbox\ember\records\traits\ElementAttribute;
@@ -29,7 +28,6 @@ use flipbox\scorecard\validators\ElementMetricValidator;
  * @property float $weight
  * @property string $version
  * @property array|null $settings
- * @property ElementMetric[] $children
  */
 abstract class ElementMetric extends ActiveRecordWithId implements MetricInterface
 {
@@ -46,11 +44,6 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
     const VERSION = '1.0';
 
     /**
-     * @return array
-     */
-    const METRICS = [];
-
-    /**
      * The table alias
      */
     const TABLE_ALIAS = 'scorecard_element_metrics';
@@ -61,9 +54,9 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
     protected $getterPriorityAttributes = ['elementId', 'score'];
 
     /**
-     * @var MetricInterface[]
+     * @return float
      */
-    private $metrics;
+    abstract protected function calculateScore(): float;
 
     /**
      * @inheritdoc
@@ -169,22 +162,6 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
      *******************************************/
 
     /**
-     * @return float
-     */
-    protected function calculateScore(): float
-    {
-        // Sum of total/weight
-        $total = $weights = 0;
-
-        foreach ($this->getMetrics() as $metric) {
-            $total += $metric->getScore();
-            $weights += $metric->getWeight();
-        }
-
-        return (float)($total / $weights);
-    }
-    
-    /**
      * @inheritdoc
      * @throws \ReflectionException
      */
@@ -230,185 +207,5 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
     public function toConfig(): array
     {
         return parent::toArray();
-    }
-
-
-    /*******************************************
-     * METRICS (CHILDREN)
-     *******************************************/
-
-    /**
-     * @return MetricInterface[]
-     */
-    public function getMetrics(): array
-    {
-        if ($this->metrics === null) {
-            $this->setMetrics(
-                $this->loadMetrics()
-            );
-        }
-
-        return $this->metrics;
-    }
-
-    /**
-     * @return array
-     */
-    protected function loadMetrics(): array
-    {
-        if ($this->getIsNewRecord()) {
-            return (array)static::METRICS;
-        }
-
-        return array_filter(array_merge(
-            $this->children,
-            (array)ArrayHelper::getValue($this->settings, 'metrics', [])
-        ));
-    }
-
-    /**
-     * @param array $metrics
-     * @return $this
-     */
-    public function setMetrics(array $metrics = [])
-    {
-        $this->metrics = [];
-
-        foreach ($metrics as $metric) {
-            if (!$metric instanceof MetricInterface) {
-                $metric = $this->createMetric($metric);
-            }
-
-            $this->metrics[] = $metric;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @noinspection PhpDocMissingThrowsInspection
-     *
-     * @param $metric
-     * @return MetricInterface
-     */
-    protected function createMetric($metric): MetricInterface
-    {
-        if (is_string($metric)) {
-            $metric = ['class' => $metric];
-        }
-
-        /** Pass along the element */
-        if (is_array($metric) && !isset($metric['elementId'])) {
-            $metric['element'] = $metric['element'] ?? $this->getElement();
-        }
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return MetricHelper::create($metric);
-    }
-
-    /*******************************************
-     * CHILDREN (RECORDS)
-     *******************************************/
-
-    /**
-     * @return ElementMetricQuery
-     */
-    public function getChildren(): ElementMetricQuery
-    {
-        /** @var ElementMetricQuery $query */
-        $query = $this->hasMany(
-            static::class,
-            ['parentId' => 'id']
-        );
-
-        // Children have parents
-        $query->parentId(':notempty:');
-
-        return $query;
-    }
-
-    /*******************************************
-     * VALIDATE (CHILD RECORDS)
-     *******************************************/
-
-    /**
-     * @inheritdoc
-     */
-    public function beforeValidate()
-    {
-        $success = true;
-        foreach ($this->getMetrics() as $metric) {
-            if ($metric instanceof ElementMetric) {
-                if (!$metric->validate()) {
-                    $success = false;
-                }
-            }
-        }
-
-        return $success ? parent::beforeValidate() : false;
-    }
-
-    /*******************************************
-     * SAVE (CHILD RECORDS)
-     *******************************************/
-
-    /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        $metrics = [];
-
-        foreach ($this->getMetrics() as $metric) {
-            if (!$metric instanceof ElementMetric) {
-                $metrics[] = $metric->toConfig();
-            }
-        }
-        /** @var array $metrics */
-        /** @var ElementMetric[] $children */
-
-        // Merge into settings
-        if (!empty($metrics)) {
-            $this->settings = array_filter(array_merge(
-                (array)$this->settings,
-                [
-                    'metrics' => $metrics
-                ]
-            ));
-        }
-
-        return parent::beforeSave($insert);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        $children = [];
-
-        foreach ($this->getMetrics() as $metric) {
-            if ($metric instanceof ElementMetric) {
-                $children[] = $metric;
-            }
-        }
-
-        if (!empty($children)) {
-            $success = true;
-            foreach ($children as $child) {
-                $child->parentId = $this->id;
-
-                if (!$child->save()) {
-                    $success = false;
-                }
-            }
-
-            if (!$success) {
-                $this->addError('children', 'Unable to save children');
-            }
-        }
-
-        return parent::afterSave($insert, $changedAttributes);
     }
 }
