@@ -66,18 +66,14 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
     private $metrics;
 
     /**
-     * @return float
-     */
-    abstract protected function calculateScore(): float;
-
-    /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
 
-        $this->setAttribute('settings',
+        $this->setAttribute(
+            'settings',
             MetricHelper::resolveSettings(
                 $this->getAttribute('settings')
             )
@@ -172,6 +168,22 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
      * METRIC INTERFACE
      *******************************************/
 
+    /**
+     * @return float
+     */
+    protected function calculateScore(): float
+    {
+        // Sum of total/weight
+        $total = $weights = 0;
+
+        foreach ($this->getMetrics() as $metric) {
+            $total += $metric->getScore();
+            $weights += $metric->getWeight();
+        }
+
+        return (float)($total / $weights);
+    }
+    
     /**
      * @inheritdoc
      * @throws \ReflectionException

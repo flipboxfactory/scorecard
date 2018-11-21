@@ -35,7 +35,7 @@ abstract class AbstractMetric extends BaseObject implements MetricInterface
     /**
      * @return float
      */
-    protected abstract function calculateScore(): float;
+    abstract protected function calculateScore(): float;
 
     /**
      * @inheritdoc
