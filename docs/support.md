@@ -1,11 +1,11 @@
 # Support
 
-All **Bugs**, **Enhancements**, **Feature Requests** and other issues are managed through [GitHub](https://github.com/flipboxfactory/scorecard/issues).
+All **Bugs**, **Enhancements**, **Feature Requests** and other issues are managed through GitHub.
 
-[View Issues](https://github.com/flipboxfactory/scorecard/issues)
+<button-link url="https://github.com/flipboxfactory/scorecard/issues">View Issues</button-link>
 
 ***
 
-Collaborate and get questions answered quickly via [chat](https://gitter.im/flipboxfactory/scorecard).
+Collaborate and get questions answered quickly via chat.
 
-[View Discussions](https://gitter.im/flipboxfactory/scorecard)
+<button-link url="https://gitter.im/flipboxfactory/scorecard">View Discussions</button-link>
