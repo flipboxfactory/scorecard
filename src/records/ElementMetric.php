@@ -49,6 +49,11 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
     const TABLE_ALIAS = 'scorecard_element_metrics';
 
     /**
+     * The Active Query class
+     */
+    const ACTIVE_QUERY_CLASS = ElementMetricQuery::class;
+
+    /**
      * @inheritdoc
      */
     protected $getterPriorityAttributes = ['elementId', 'score'];
@@ -89,7 +94,7 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return Craft::createObject(ElementMetricQuery::class, [get_called_class()]);
+        return Craft::createObject(static::ACTIVE_QUERY_CLASS, [get_called_class()]);
     }
 
     /**
