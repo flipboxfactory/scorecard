@@ -16,7 +16,7 @@ use flipbox\scorecard\records\ElementMetric;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-class Install extends Migration
+abstract class AbstractElementMetricMigration extends Migration
 {
     /**
      * @inheritdoc
@@ -46,7 +46,17 @@ class Install extends Migration
      */
     protected function createTables()
     {
-        $this->createTable(ElementMetric::tableName(), [
+        $this->createTable(ElementMetric::tableName(), $this->tableAttributes());
+    }
+
+    /**
+     * The table attributes
+     *
+     * @return array
+     */
+    protected function tableAttributes(): array
+    {
+        return [
             'id' => $this->primaryKey(),
             'parentId' => $this->integer(),
             'elementId' => $this->integer()->notNull(),
@@ -58,7 +68,7 @@ class Install extends Migration
             'dateUpdated' => $this->dateTime()->notNull(),
             'dateCreated' => $this->dateTime()->notNull(),
             'uid' => $this->uid()
-        ]);
+        ];
     }
 
     /**
