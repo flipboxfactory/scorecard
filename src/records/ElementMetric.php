@@ -206,6 +206,6 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
      */
     public function toConfig(): array
     {
-        return parent::toArray();
+        return $this->toArray();
     }
 }
