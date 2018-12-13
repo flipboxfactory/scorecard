@@ -28,6 +28,7 @@ use flipbox\scorecard\validators\ElementMetricValidator;
  * @property float $weight
  * @property string $version
  * @property array|null $settings
+ * @property \DateTime $dateCalculated
  */
 abstract class ElementMetric extends ActiveRecordWithId implements MetricInterface
 {

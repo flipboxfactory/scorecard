@@ -65,6 +65,7 @@ abstract class AbstractElementMetricMigration extends Migration
             'weight' => $this->float(4)->notNull(),
             'version' => $this->string(50)->notNull(),
             'settings' => $this->text(),
+            'dateCalculated' => $this->dateTime()->notNull(),
             'dateUpdated' => $this->dateTime()->notNull(),
             'dateCreated' => $this->dateTime()->notNull(),
             'uid' => $this->uid()
