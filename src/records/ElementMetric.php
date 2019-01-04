@@ -9,13 +9,14 @@
 namespace flipbox\scorecard\records;
 
 use Craft;
+use craft\helpers\DateTimeHelper;
 use craft\helpers\StringHelper;
 use flipbox\ember\helpers\ModelHelper;
 use flipbox\ember\records\ActiveRecordWithId;
 use flipbox\ember\records\traits\ElementAttribute;
 use flipbox\scorecard\db\ElementMetricQuery;
 use flipbox\scorecard\helpers\MetricHelper;
-use flipbox\scorecard\metrics\MetricInterface;
+use flipbox\scorecard\metrics\SavableMetricInterface;
 use flipbox\scorecard\validators\ElementMetricValidator;
 
 /**
@@ -30,7 +31,7 @@ use flipbox\scorecard\validators\ElementMetricValidator;
  * @property array|null $settings
  * @property \DateTime $dateCalculated
  */
-abstract class ElementMetric extends ActiveRecordWithId implements MetricInterface
+abstract class ElementMetric extends ActiveRecordWithId implements SavableMetricInterface
 {
     use ElementAttribute;
 
@@ -85,6 +86,7 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
         if ($this->getIsNewRecord()) {
             $this->weight = $this->weight ?: static::WEIGHT;
             $this->version = $this->version ?: static::VERSION;
+            $this->dateCalculated = $this->dateCalculated ?: DateTimeHelper::currentUTCDateTime();
         }
     }
 
@@ -151,7 +153,8 @@ abstract class ElementMetric extends ActiveRecordWithId implements MetricInterfa
                         'settings',
                         'score',
                         'weight',
-                        'version'
+                        'version',
+                        'dateCalculated'
                     ],
                     'safe',
                     'on' => [
