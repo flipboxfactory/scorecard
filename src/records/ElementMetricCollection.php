@@ -117,9 +117,13 @@ abstract class ElementMetricCollection extends ElementMetric
             $metric = ['class' => $metric];
         }
 
-        /** Pass along the element */
-        if (is_array($metric) && !isset($metric['elementId'])) {
-            $metric['element'] = $metric['element'] ?? $this->getElement();
+        /** Pass along other vars */
+        if (is_array($metric)) {
+            if (!isset($metric['elementId'])) {
+                $metric['element'] = $metric['element'] ?? $this->getElement();
+            }
+
+            $metric['dateCalculated'] = $metric['dateCalculated'] ?? $this->dateCalculated;
         }
 
         /** @noinspection PhpUnhandledExceptionInspection */
