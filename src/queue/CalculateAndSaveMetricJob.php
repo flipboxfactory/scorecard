@@ -8,7 +8,6 @@
 
 namespace flipbox\scorecard\queue;
 
-
 use Craft;
 use craft\helpers\Json;
 use craft\queue\BaseJob;
@@ -30,7 +29,7 @@ use yii\di\Instance;
  * @property array|null $settings
  * @property \DateTime $dateCalculated
  */
-class CalculateAndSaveMetric extends BaseJob implements JobInterface, Serializable
+class CalculateAndSaveMetricJob extends BaseJob implements JobInterface, Serializable
 {
     /**
      * @var
