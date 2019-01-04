@@ -49,7 +49,7 @@ abstract class ElementMetricCollection extends ElementMetric
             $weights += $metric->getWeight();
         }
 
-        return (float)($total / $weights);
+        return $total > 0 ? (float)($total / $weights) : 0;
     }
 
 
