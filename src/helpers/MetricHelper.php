@@ -54,7 +54,7 @@ class MetricHelper
         return Craft::createObject(
             array_merge(
                 ['class' => $class],
-                self::purifyConfig($class, $config)
+                $config
             )
         );
     }
@@ -78,23 +78,5 @@ class MetricHelper
         }
 
         return $settings;
-    }
-
-    /**
-     * @param $object
-     * @param array $config
-     * @return array
-     */
-    protected static function purifyConfig($object, array $config = []): array
-    {
-        foreach ($config as $name => $value) {
-            if (method_exists($object, 'set' . $name) || property_exists($object, $name)) {
-                continue;
-            }
-
-            unset($config[$name]);
-        }
-
-        return $config;
     }
 }
