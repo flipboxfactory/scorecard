@@ -226,7 +226,7 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
         $dateCalculated = $this->getAttribute('dateCalculated');
 
         if ($dateCalculated !== null && !$dateCalculated instanceof \DateTime) {
-            if(is_array($dateCalculated)) {
+            if (is_array($dateCalculated)) {
                 $dateCalculated = $dateCalculated['date'] ?? $dateCalculated;
             }
 
