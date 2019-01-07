@@ -6,10 +6,10 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\validators;
+namespace flipbox\craft\scorecard\validators;
 
 use Craft;
-use flipbox\scorecard\metrics\MetricInterface;
+use flipbox\craft\scorecard\metrics\MetricInterface;
 use yii\validators\Validator;
 
 /**

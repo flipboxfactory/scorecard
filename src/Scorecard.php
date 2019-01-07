@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard;
+namespace flipbox\craft\scorecard;
 
 use craft\base\Plugin;
 use flipbox\ember\modules\LoggerTrait;

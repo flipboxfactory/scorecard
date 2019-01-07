@@ -6,11 +6,11 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\migrations;
+namespace flipbox\craft\scorecard\migrations;
 
 use craft\db\Migration;
 use craft\records\Element as ElementRecord;
-use flipbox\scorecard\records\ElementMetric;
+use flipbox\craft\scorecard\records\ElementMetric;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>

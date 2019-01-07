@@ -6,10 +6,10 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\tests;
+namespace flipbox\craft\scorecard\tests;
 
 use Codeception\Test\Unit;
-use flipbox\scorecard\Scorecard;
+use flipbox\craft\scorecard\Scorecard;
 
 class ScorecardTest extends Unit
 {

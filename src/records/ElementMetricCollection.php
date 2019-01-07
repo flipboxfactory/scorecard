@@ -6,12 +6,12 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\records;
+namespace flipbox\craft\scorecard\records;
 
 use flipbox\ember\helpers\ArrayHelper;
-use flipbox\scorecard\queries\ElementMetricQuery;
-use flipbox\scorecard\helpers\MetricHelper;
-use flipbox\scorecard\metrics\MetricInterface;
+use flipbox\craft\scorecard\queries\ElementMetricQuery;
+use flipbox\craft\scorecard\helpers\MetricHelper;
+use flipbox\craft\scorecard\metrics\MetricInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>

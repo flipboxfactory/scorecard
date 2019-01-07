@@ -1,5 +1,5 @@
 {
-  "name": "flipboxfactory/scorecard",
+  "name": "flipboxfactory/craft-scorecard",
   "description": "Grade Craft CMS Elements",
   "version": "1.0.0-beta.6",
   "type": "craft-plugin",
@@ -19,12 +19,12 @@
   },
   "autoload": {
     "psr-4": {
-      "flipbox\\scorecard\\": "src/"
+      "flipbox\\craft\\scorecard\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "flipbox\\scorecard\\tests\\": "tests/src/"
+      "flipbox\\craft\\scorecard\\tests\\": "tests/src/"
     }
   },
   "extra": {
@@ -32,7 +32,7 @@
     "handle": "scorecard",
     "developer": "Flipbox Digital",
     "developerUrl": "https://www.flipboxdigital.com",
-    "class": "flipbox\\scorecard\\Scorecard",
+    "class": "flipbox\\craft\\scorecard\\Scorecard",
     "changelogUrl": "https://raw.githubusercontent.com/flipboxfactory/scorecard/master/CHANGELOG.md",
     "downloadUrl": "https://github.com/flipboxfactory/scorecard/archive/master.zip",
     "hasCpSettings": false,

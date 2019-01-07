@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\metrics;
+namespace flipbox\craft\scorecard\metrics;
 
 use craft\helpers\StringHelper;
 use yii\base\BaseObject;

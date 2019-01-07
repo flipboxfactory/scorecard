@@ -6,9 +6,9 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\metrics;
+namespace flipbox\craft\scorecard\metrics;
 
-use flipbox\scorecard\helpers\MetricHelper;
+use flipbox\craft\scorecard\helpers\MetricHelper;
 
 /**
  * A Metric which utilized child Metrics to calculate a score.  This is useful when preforming complex calculations

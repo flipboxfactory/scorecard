@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\queries;
+namespace flipbox\craft\scorecard\queries;
 
 use craft\helpers\Db;
 use flipbox\ember\db\CacheableActiveQuery;

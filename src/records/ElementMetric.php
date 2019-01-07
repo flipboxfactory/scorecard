@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\records;
+namespace flipbox\craft\scorecard\records;
 
 use Craft;
 use craft\helpers\DateTimeHelper;
@@ -14,10 +14,10 @@ use craft\helpers\StringHelper;
 use flipbox\ember\helpers\ModelHelper;
 use flipbox\ember\records\ActiveRecordWithId;
 use flipbox\ember\records\traits\ElementAttribute;
-use flipbox\scorecard\queries\ElementMetricQuery;
-use flipbox\scorecard\helpers\MetricHelper;
-use flipbox\scorecard\metrics\SavableMetricInterface;
-use flipbox\scorecard\validators\ElementMetricValidator;
+use flipbox\craft\scorecard\queries\ElementMetricQuery;
+use flipbox\craft\scorecard\helpers\MetricHelper;
+use flipbox\craft\scorecard\metrics\SavableMetricInterface;
+use flipbox\craft\scorecard\validators\ElementMetricValidator;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>

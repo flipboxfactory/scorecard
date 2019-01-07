@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\metrics;
+namespace flipbox\craft\scorecard\metrics;
 
 /**
  * A Metric is an object which performs a calculation to produce a score.  The score may be weighted (or boosted) if

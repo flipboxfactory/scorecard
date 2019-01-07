@@ -6,13 +6,13 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\helpers;
+namespace flipbox\craft\scorecard\helpers;
 
 use Craft;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Json;
 use flipbox\ember\helpers\ObjectHelper;
-use flipbox\scorecard\metrics\MetricInterface;
+use flipbox\craft\scorecard\metrics\MetricInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>

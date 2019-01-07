@@ -6,14 +6,14 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\queue;
+namespace flipbox\craft\scorecard\queue;
 
 use Craft;
 use craft\helpers\Json;
 use craft\queue\BaseJob;
 use craft\queue\JobInterface;
-use flipbox\scorecard\metrics\SavableMetricInterface;
-use flipbox\scorecard\Scorecard;
+use flipbox\craft\scorecard\metrics\SavableMetricInterface;
+use flipbox\craft\scorecard\Scorecard;
 use Serializable;
 use yii\di\Instance;
 
