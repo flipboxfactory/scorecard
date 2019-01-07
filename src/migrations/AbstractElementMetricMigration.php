@@ -19,6 +19,22 @@ use flipbox\craft\scorecard\records\ElementMetric;
 abstract class AbstractElementMetricMigration extends Migration
 {
     /**
+     * The record class
+     */
+    const RECORD_CLASS = ElementMetric::class;
+
+    /**
+     * @return string
+     */
+    protected static function tableName(): string
+    {
+        /** @var ElementMetric $recordClass */
+        $recordClass = static::RECORD_CLASS;
+
+        return $recordClass::tableName();
+    }
+
+    /**
      * @inheritdoc
      */
     public function safeUp()
@@ -34,7 +50,7 @@ abstract class AbstractElementMetricMigration extends Migration
      */
     public function safeDown()
     {
-        $this->dropTableIfExists(ElementMetric::tableName());
+        $this->dropTableIfExists(static::tableName());
 
         return true;
     }
@@ -46,7 +62,7 @@ abstract class AbstractElementMetricMigration extends Migration
      */
     protected function createTables()
     {
-        $this->createTable(ElementMetric::tableName(), $this->tableAttributes());
+        $this->createTable(static::tableName(), $this->tableAttributes());
     }
 
     /**
@@ -81,10 +97,10 @@ abstract class AbstractElementMetricMigration extends Migration
     {
         $this->addForeignKey(
             $this->db->getForeignKeyName(
-                ElementMetric::tableName(),
+                static::tableName(),
                 'elementId'
             ),
-            ElementMetric::tableName(),
+            static::tableName(),
             'elementId',
             ElementRecord::tableName(),
             'id',
@@ -93,12 +109,12 @@ abstract class AbstractElementMetricMigration extends Migration
 
         $this->addForeignKey(
             $this->db->getForeignKeyName(
-                ElementMetric::tableName(),
+                static::tableName(),
                 'parentId'
             ),
-            ElementMetric::tableName(),
+            static::tableName(),
             'parentId',
-            ElementMetric::tableName(),
+            ElementRecord::tableName(),
             'id',
             'CASCADE'
         );
