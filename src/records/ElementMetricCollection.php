@@ -9,7 +9,7 @@
 namespace flipbox\scorecard\records;
 
 use flipbox\ember\helpers\ArrayHelper;
-use flipbox\scorecard\db\ElementMetricQuery;
+use flipbox\scorecard\queries\ElementMetricQuery;
 use flipbox\scorecard\helpers\MetricHelper;
 use flipbox\scorecard\metrics\MetricInterface;
 
@@ -146,8 +146,9 @@ abstract class ElementMetricCollection extends ElementMetric
             ['parentId' => 'id']
         );
 
-        // Children have parents
-        $query->parentId(':notempty:');
+        // Prep query for children
+        $query->class(null)
+            ->parentId(':notempty:');
 
         return $query;
     }

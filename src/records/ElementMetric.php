@@ -14,7 +14,7 @@ use craft\helpers\StringHelper;
 use flipbox\ember\helpers\ModelHelper;
 use flipbox\ember\records\ActiveRecordWithId;
 use flipbox\ember\records\traits\ElementAttribute;
-use flipbox\scorecard\db\ElementMetricQuery;
+use flipbox\scorecard\queries\ElementMetricQuery;
 use flipbox\scorecard\helpers\MetricHelper;
 use flipbox\scorecard\metrics\SavableMetricInterface;
 use flipbox\scorecard\validators\ElementMetricValidator;
@@ -97,7 +97,15 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return Craft::createObject(static::ACTIVE_QUERY_CLASS, [get_called_class()]);
+        return Craft::createObject(
+            static::ACTIVE_QUERY_CLASS,
+            [
+                get_called_class(),
+                [
+                    'class' => static::class
+                ]
+            ]
+        );
     }
 
     /**
@@ -209,6 +217,41 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
 
         return (float)$this->getAttribute('score');
     }
+
+
+    /*******************************************
+     * SETTINGS
+     *******************************************/
+
+    /**
+     * @param string $attribute
+     * @return mixed
+     */
+    public function getSettingsValue(string $attribute)
+    {
+        return $this->settings[$attribute] ?? null;
+    }
+
+    /**
+     * @param string $attribute
+     * @param $value
+     * @return $this
+     */
+    public function setSettingsValue(string $attribute, $value)
+    {
+        $settings = MetricHelper::resolveSettings(
+            $this->getAttribute('settings')
+        );
+        $settings[$attribute] = $value;
+        $this->setAttribute('settings', $settings);
+
+        return $this;
+    }
+
+
+    /*******************************************
+     * CONFIGURATION
+     *******************************************/
 
     /**
      * @return array

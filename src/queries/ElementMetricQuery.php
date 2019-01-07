@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/scorecard/
  */
 
-namespace flipbox\scorecard\db;
+namespace flipbox\scorecard\queries;
 
 use craft\helpers\Db;
 use flipbox\ember\db\CacheableActiveQuery;
@@ -44,6 +44,11 @@ class ElementMetricQuery extends CacheableActiveQuery
      * @var string|string[]|null
      */
     public $version;
+
+    /**
+     * @var string|string[]|null
+     */
+    public $class;
 
     /*******************************************
      * ATTRIBUTES
@@ -144,6 +149,25 @@ class ElementMetricQuery extends CacheableActiveQuery
         return $this->version($version);
     }
 
+    /**
+     * @param string|string[]|null $class
+     * @return $this
+     */
+    public function class($class)
+    {
+        $this->class = $class;
+        return $this;
+    }
+
+    /**
+     * @param string|string[]|null $class
+     * @return $this
+     */
+    public function setClass($class)
+    {
+        return $this->class($class);
+    }
+
     /*******************************************
      * PREPARE
      *******************************************/
@@ -153,9 +177,6 @@ class ElementMetricQuery extends CacheableActiveQuery
      */
     public function prepare($builder)
     {
-        // Always set the class
-        $this->andWhere(Db::parseParam('class', $this->modelClass));
-
         // Apply attribute params
         $this->prepareParams();
 
@@ -171,7 +192,7 @@ class ElementMetricQuery extends CacheableActiveQuery
      */
     protected function prepareParams()
     {
-        $attributes = ['id', 'parentId', 'score', 'weight', 'version'];
+        $attributes = ['id', 'parentId', 'score', 'weight', 'version', 'class'];
 
         foreach ($attributes as $attribute) {
             if (($value = $this->{$attribute}) !== null) {
