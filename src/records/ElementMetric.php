@@ -229,7 +229,11 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
      */
     public function getSettingsValue(string $attribute)
     {
-        return $this->settings[$attribute] ?? null;
+        $settings = MetricHelper::resolveSettings(
+            $this->getAttribute('settings')
+        );
+
+        return $settings[$attribute] ?? null;
     }
 
     /**
