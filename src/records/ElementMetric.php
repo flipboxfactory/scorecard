@@ -58,7 +58,7 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     /**
      * @inheritdoc
      */
-    protected $getterPriorityAttributes = ['elementId', 'score'];
+    protected $getterPriorityAttributes = ['elementId', 'score', 'dateCalculated'];
 
     /**
      * @return float
@@ -216,6 +216,26 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
         }
 
         return (float)$this->getAttribute('score');
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateCalculated()
+    {
+        $dateCalculated = $this->getAttribute('dateCalculated');
+
+        if ($dateCalculated !== null && !$dateCalculated instanceof \DateTime) {
+            if(is_array($dateCalculated)) {
+                $dateCalculated = $dateCalculated['date'] ?? $dateCalculated;
+            }
+
+            $dateCalculated = DateTimeHelper::toDateTime($dateCalculated);
+
+            $this->setAttribute('dateCalculated', $dateCalculated);
+        }
+
+        return $dateCalculated;
     }
 
 

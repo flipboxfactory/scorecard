@@ -114,7 +114,7 @@ abstract class AbstractElementMetricMigration extends Migration
             ),
             static::tableName(),
             'parentId',
-            ElementRecord::tableName(),
+            static::tableName(),
             'id',
             'CASCADE'
         );
