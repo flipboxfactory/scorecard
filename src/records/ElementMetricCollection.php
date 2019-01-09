@@ -37,7 +37,7 @@ abstract class ElementMetricCollection extends ElementMetric
      *******************************************/
 
     /**
-     * @return float
+     * @inheritdoc
      */
     protected function calculateScore(): float
     {
@@ -50,6 +50,18 @@ abstract class ElementMetricCollection extends ElementMetric
         }
 
         return $total > 0 ? (float)($total / $weights) : 0;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function resetScore()
+    {
+        foreach ($this->getMetrics() as $metric) {
+            $metric->resetScore();
+        }
+
+        return parent::resetScore();
     }
 
 

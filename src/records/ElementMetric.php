@@ -111,6 +111,26 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     /**
      * @inheritdoc
      */
+    public function resetScore()
+    {
+        $this->setAttribute('score', null);
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        // Make sure score is calculated
+        $this->getScore();
+
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function instantiate($row)
     {
         $class = $row['class'] ?? static::class;

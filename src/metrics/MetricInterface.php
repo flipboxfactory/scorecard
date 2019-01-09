@@ -39,6 +39,11 @@ interface MetricInterface
     public function getScore(): float;
 
     /**
+     * @return static
+     */
+    public function resetScore();
+
+    /**
      * The Metric weight.  The score should be multiplied by this number.
      *
      * @return float

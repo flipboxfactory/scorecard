@@ -52,6 +52,18 @@ abstract class AbstractMetricCollection extends AbstractMetric
     /**
      * @inheritdoc
      */
+    public function resetScore()
+    {
+        foreach ($this->metrics as $metric) {
+            $metric->resetScore();
+        }
+
+        return parent::resetScore();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function toConfig(): array
     {
         $children = [];

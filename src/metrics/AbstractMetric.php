@@ -30,7 +30,7 @@ abstract class AbstractMetric extends BaseObject implements MetricInterface
     /**
      * @var float
      */
-    public $score;
+    private $score;
 
     /**
      * @return float
@@ -75,6 +75,25 @@ abstract class AbstractMetric extends BaseObject implements MetricInterface
         }
 
         return $this->score * $this->getWeight();
+    }
+
+    /**
+     * @return $this
+     */
+    public function resetScore()
+    {
+        $this->score = null;
+        return $this;
+    }
+
+    /**
+     * @param float|null $score
+     * @return $this
+     */
+    public function setScore(float $score = null)
+    {
+        $this->score = $score;
+        return $this;
     }
 
     /**
