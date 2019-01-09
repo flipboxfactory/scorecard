@@ -10,6 +10,7 @@ namespace flipbox\craft\scorecard\queries;
 
 use craft\helpers\Db;
 use flipbox\ember\db\CacheableActiveQuery;
+use flipbox\ember\db\traits\AuditAttributes;
 use flipbox\ember\db\traits\ElementAttribute;
 
 /**
@@ -18,7 +19,8 @@ use flipbox\ember\db\traits\ElementAttribute;
  */
 class ElementMetricQuery extends CacheableActiveQuery
 {
-    use ElementAttribute;
+    use ElementAttribute,
+        AuditAttributes;
 
     /**
      * @var int|int[]|string|string[]|null
@@ -49,6 +51,20 @@ class ElementMetricQuery extends CacheableActiveQuery
      * @var string|string[]|null
      */
     public $class;
+
+    /**
+     * @var mixed
+     */
+    public $dateCalculated;
+
+    /**
+     * return static
+     */
+    public function dateCalculated($value)
+    {
+        $this->dateCalculated = $value;
+        return $this;
+    }
 
     /*******************************************
      * ATTRIBUTES
@@ -179,6 +195,7 @@ class ElementMetricQuery extends CacheableActiveQuery
     {
         // Apply attribute params
         $this->prepareParams();
+        $this->applyAuditAttributeConditions();
 
         return parent::prepare($builder);
     }
@@ -202,6 +219,10 @@ class ElementMetricQuery extends CacheableActiveQuery
 
         if (($value = $this->element) !== null) {
             $this->andWhere(Db::parseParam('elementId', $value));
+        }
+
+        if ($this->dateCalculated !== null) {
+            $this->andWhere(Db::parseDateParam('dateCalculated', $this->dateCalculated));
         }
     }
 }
