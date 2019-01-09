@@ -92,6 +92,8 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
 
     /**
      * @inheritdoc
+     * @throws \yii\base\InvalidConfigException
+     * @return ElementMetricQuery
      */
     public static function find()
     {
