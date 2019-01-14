@@ -206,7 +206,9 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
      */
     public static function displayName(): string
     {
-        return StringHelper::titleize(
+        return preg_replace(
+            '/(?<!^)([A-Z])/',
+            ' $0',
             (new \ReflectionClass(static::class))
                 ->getShortName()
         );
