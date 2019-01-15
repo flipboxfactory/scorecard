@@ -68,35 +68,17 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     /**
      * @inheritdoc
      */
-    public function init()
-    {
-        parent::init();
-
-        $this->setAttribute(
-            'settings',
-            MetricHelper::resolveSettings(
-                $this->getAttribute('settings')
-            )
-        );
-
-        // Always this class
-        $this->class = static::class;
-
-        // Defaults
-        if ($this->getIsNewRecord()) {
-            $this->dateCalculated = $this->dateCalculated ?: $this->defaultDateCalculated();
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
     public static function populateRecord($record, $row)
     {
+        $row['settings'] = MetricHelper::resolveSettings(
+            $row['settings'] ?? []
+        );
+
         parent::populateRecord($record, $row);
 
         $record->version = static::VERSION;
         $record->weight = static::WEIGHT;
+        $record->class = static::class;
     }
 
     /**
