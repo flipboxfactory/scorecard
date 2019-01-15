@@ -10,7 +10,7 @@ namespace flipbox\craft\scorecard\records;
 
 use Craft;
 use craft\helpers\DateTimeHelper;
-use craft\helpers\StringHelper;
+use DateTime;
 use flipbox\ember\helpers\ModelHelper;
 use flipbox\ember\records\ActiveRecordWithId;
 use flipbox\ember\records\traits\ElementAttribute;
@@ -29,7 +29,7 @@ use flipbox\craft\scorecard\validators\ElementMetricValidator;
  * @property float $weight
  * @property string $version
  * @property array|null $settings
- * @property \DateTime $dateCalculated
+ * @property DateTime $dateCalculated
  */
 abstract class ElementMetric extends ActiveRecordWithId implements SavableMetricInterface
 {
@@ -84,10 +84,19 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
 
         // Defaults
         if ($this->getIsNewRecord()) {
-            $this->weight = $this->weight ?: static::WEIGHT;
-            $this->version = $this->version ?: static::VERSION;
-            $this->dateCalculated = $this->dateCalculated ?: DateTimeHelper::currentUTCDateTime();
+            $this->dateCalculated = $this->dateCalculated ?: $this->defaultDateCalculated();
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function populateRecord($record, $row)
+    {
+        parent::populateRecord($record, $row);
+
+        $record->version = static::VERSION;
+        $record->weight = static::WEIGHT;
     }
 
     /**
@@ -243,23 +252,35 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime
      */
-    public function getDateCalculated()
+    public function getDateCalculated(): DateTime
     {
-        $dateCalculated = $this->getAttribute('dateCalculated');
+        if (null === ($dateCalculated = $this->getAttribute('dateCalculated'))) {
+            $dateCalculated = $this->defaultDateCalculated();
+            $this->setAttribute('dateCalculated', $dateCalculated);
+        }
 
-        if ($dateCalculated !== null && !$dateCalculated instanceof \DateTime) {
+        if (!$dateCalculated instanceof DateTime) {
             if (is_array($dateCalculated)) {
                 $dateCalculated = $dateCalculated['date'] ?? $dateCalculated;
             }
 
             $dateCalculated = DateTimeHelper::toDateTime($dateCalculated);
-
             $this->setAttribute('dateCalculated', $dateCalculated);
         }
 
         return $dateCalculated;
+    }
+
+    /**
+     * @return DateTime
+     */
+    protected function defaultDateCalculated(): DateTime
+    {
+        return DateTimeHelper::toDateTime(
+            DateTimeHelper::currentUTCDateTime()->format('Y-m-d')
+        );
     }
 
 
