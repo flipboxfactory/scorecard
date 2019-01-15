@@ -70,10 +70,6 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
      */
     public static function populateRecord($record, $row)
     {
-        $row['settings'] = MetricHelper::resolveSettings(
-            $row['settings'] ?? []
-        );
-
         parent::populateRecord($record, $row);
 
         $record->version = static::VERSION;
