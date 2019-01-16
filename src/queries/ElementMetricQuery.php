@@ -58,13 +58,12 @@ class ElementMetricQuery extends CacheableActiveQuery
     public $dateCalculated;
 
     /**
-     * return static
+     * @var array
      */
-    public function dateCalculated($value)
-    {
-        $this->dateCalculated = $value;
-        return $this;
-    }
+    public $orderBy = [
+        'dateCalculated' => SORT_DESC
+    ];
+
 
     /*******************************************
      * ATTRIBUTES
@@ -182,6 +181,25 @@ class ElementMetricQuery extends CacheableActiveQuery
     public function setClass($class)
     {
         return $this->class($class);
+    }
+
+    /**
+     * @param mixed $value
+     * @return $this
+     */
+    public function dateCalculated($value)
+    {
+        $this->dateCalculated = $value;
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     * @return $this
+     */
+    public function setDateCalculated($value)
+    {
+        return $this->dateCalculated($value);
     }
 
     /*******************************************
