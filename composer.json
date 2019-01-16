@@ -1,7 +1,7 @@
 {
   "name": "flipboxfactory/craft-scorecard",
   "description": "Grade Craft CMS Elements",
-  "version": "1.0.0-beta.12",
+  "version": "1.0.0-beta.11",
   "type": "craft-plugin",
   "license": "MIT",
   "authors": [{
@@ -42,6 +42,5 @@
       "dev-develop": "1.0.x-dev",
       "dev-master": "1.0.x-dev"
     }
-  },
-
+  }
 }
