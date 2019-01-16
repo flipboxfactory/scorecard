@@ -68,6 +68,23 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        parent::init();
+
+        // Always this class
+        $this->class = static::class;
+
+        // Defaults
+        if ($this->getIsNewRecord()) {
+            $this->weight = $this->weight ?: static::WEIGHT;
+            $this->version = $this->version ?: static::VERSION;
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function populateRecord($record, $row)
     {
         parent::populateRecord($record, $row);
