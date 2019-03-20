@@ -11,7 +11,7 @@ namespace flipbox\craft\scorecard\helpers;
 use Craft;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Json;
-use flipbox\ember\helpers\ObjectHelper;
+use flipbox\craft\ember\helpers\ObjectHelper;
 use flipbox\craft\scorecard\metrics\MetricInterface;
 
 /**

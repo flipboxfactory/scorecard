@@ -9,9 +9,9 @@
 namespace flipbox\craft\scorecard\queries;
 
 use craft\helpers\Db;
-use flipbox\ember\db\CacheableActiveQuery;
-use flipbox\ember\db\traits\AuditAttributes;
-use flipbox\ember\db\traits\ElementAttribute;
+use flipbox\craft\ember\queries\CacheableActiveQuery;
+use flipbox\craft\ember\queries\AuditAttributesTrait;
+use flipbox\craft\ember\queries\ElementAttributeTrait;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -19,8 +19,8 @@ use flipbox\ember\db\traits\ElementAttribute;
  */
 class ElementMetricQuery extends CacheableActiveQuery
 {
-    use ElementAttribute,
-        AuditAttributes;
+    use ElementAttributeTrait,
+        AuditAttributesTrait;
 
     /**
      * @var int|int[]|string|string[]|null

@@ -8,7 +8,7 @@
 
 namespace flipbox\craft\scorecard\records;
 
-use flipbox\ember\helpers\ArrayHelper;
+use craft\helpers\ArrayHelper;
 use flipbox\craft\scorecard\queries\ElementMetricQuery;
 use flipbox\craft\scorecard\helpers\MetricHelper;
 use flipbox\craft\scorecard\metrics\MetricInterface;

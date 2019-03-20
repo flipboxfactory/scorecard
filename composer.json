@@ -10,7 +10,7 @@
   }],
   "require": {
     "craftcms/cms": "^3.0",
-    "flipboxfactory/craft-ember": "^1.0"
+    "flipboxfactory/craft-ember": "^2.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.2",

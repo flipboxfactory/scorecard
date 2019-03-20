@@ -11,9 +11,8 @@ namespace flipbox\craft\scorecard\records;
 use Craft;
 use craft\helpers\DateTimeHelper;
 use DateTime;
-use flipbox\ember\helpers\ModelHelper;
-use flipbox\ember\records\ActiveRecordWithId;
-use flipbox\ember\records\traits\ElementAttribute;
+use flipbox\craft\ember\records\ActiveRecordWithId;
+use flipbox\craft\ember\records\ElementAttributeTrait;
 use flipbox\craft\scorecard\queries\ElementMetricQuery;
 use flipbox\craft\scorecard\helpers\MetricHelper;
 use flipbox\craft\scorecard\metrics\SavableMetricInterface;
@@ -33,7 +32,7 @@ use flipbox\craft\scorecard\validators\ElementMetricValidator;
  */
 abstract class ElementMetric extends ActiveRecordWithId implements SavableMetricInterface
 {
-    use ElementAttribute;
+    use ElementAttributeTrait;
 
     /**
      * The default score weight
@@ -192,7 +191,7 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
                     ],
                     'safe',
                     'on' => [
-                        ModelHelper::SCENARIO_DEFAULT
+                        self::SCENARIO_DEFAULT
                     ]
                 ]
             ]

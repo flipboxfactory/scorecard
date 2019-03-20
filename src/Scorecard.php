@@ -9,7 +9,7 @@
 namespace flipbox\craft\scorecard;
 
 use craft\base\Plugin;
-use flipbox\ember\modules\LoggerTrait;
+use flipbox\craft\ember\modules\LoggerTrait;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -20,10 +20,9 @@ class Scorecard extends Plugin
     use LoggerTrait;
 
     /**
-     * @return string
+     * The module category
+     *
+     * @var string
      */
-    protected static function getLogFileName(): string
-    {
-        return 'scorecard';
-    }
+    protected static $category = 'scorecard';
 }
