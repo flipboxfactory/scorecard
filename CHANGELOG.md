@@ -1,6 +1,6 @@
 Changelog
 =========
-## Unreleased
+## 1.0.1 - 2019-10-30
 ### Fixed
 - Saving Element Metric record could not convert 'dateCalculated' to string prior to saving.
 
