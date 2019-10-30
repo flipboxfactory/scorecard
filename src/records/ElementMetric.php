@@ -10,6 +10,7 @@ namespace flipbox\craft\scorecard\records;
 
 use Craft;
 use craft\helpers\DateTimeHelper;
+use craft\helpers\Db;
 use DateTime;
 use flipbox\craft\ember\records\ActiveRecordWithId;
 use flipbox\craft\ember\records\ElementAttributeTrait;
@@ -28,7 +29,7 @@ use flipbox\craft\scorecard\validators\ElementMetricValidator;
  * @property float $weight
  * @property string $version
  * @property array|null $settings
- * @property DateTime $dateCalculated
+ * @property string $dateCalculated
  */
 abstract class ElementMetric extends ActiveRecordWithId implements SavableMetricInterface
 {
@@ -58,6 +59,11 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
      * @inheritdoc
      */
     protected $getterPriorityAttributes = ['elementId', 'score', 'dateCalculated'];
+
+    /**
+     * @inheritdoc
+     */
+    protected $setterPriorityAttributes = ['dateCalculated'];
 
     /**
      * @return float
@@ -246,6 +252,8 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
     }
 
     /**
+     * Returns an immutable calculated date.
+     *
      * @return DateTime
      */
     public function getDateCalculated(): DateTime
@@ -261,20 +269,31 @@ abstract class ElementMetric extends ActiveRecordWithId implements SavableMetric
             }
 
             $dateCalculated = DateTimeHelper::toDateTime($dateCalculated);
-            $this->setAttribute('dateCalculated', $dateCalculated);
         }
 
         return $dateCalculated;
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|string
      */
-    protected function defaultDateCalculated(): DateTime
+    public function setDateCalculated($date = null): self
     {
-        return DateTimeHelper::toDateTime(
-            DateTimeHelper::currentUTCDateTime()->format('Y-m-d')
-        );
+        if ($date instanceof \DateTime || DateTimeHelper::isIso8601($date)) {
+            $date = Db::prepareDateForDb($date);
+        }
+
+        $this->setAttribute('dateCalculated', $date);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function defaultDateCalculated(): string
+    {
+        return DateTimeHelper::currentUTCDateTime()->format('Y-m-d');
     }
 
 
