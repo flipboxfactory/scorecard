@@ -24,5 +24,5 @@ class Scorecard extends Plugin
      *
      * @var string
      */
-    protected static $category = 'scorecard';
+    public static $category = 'scorecard';
 }
